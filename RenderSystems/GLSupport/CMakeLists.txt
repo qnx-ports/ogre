@@ -135,6 +135,10 @@ target_include_directories(OgreGLSupport PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/GLSL>"
     PRIVATE "$<BUILD_INTERFACE:${NATIVE_INCLUDES}>")
 
+if(OGRE_MANGLE_NAME_OF_LIBRARIES_USED_BY_RVIZ)
+  set_target_properties(OgreGLSupport PROPERTIES OUTPUT_NAME OgreGLSupport_rviz)
+endif()
+
 if(OGRE_USE_WAYLAND)
   target_compile_definitions(OgreGLSupport PRIVATE OGRE_WAYLAND)
 endif()

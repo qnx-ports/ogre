@@ -96,6 +96,10 @@ if(OGRE_BUILD_COMPONENT_OVERLAY_IMGUI)
     ${IMGUI_DIR}/imconfig.h)
 endif()
 
+if(OGRE_MANGLE_NAME_OF_LIBRARIES_USED_BY_RVIZ)
+  set_target_properties(OgreOverlay PROPERTIES OUTPUT_NAME OgreOverlay_rviz)
+endif()
+
 generate_export_header(OgreOverlay 
     EXPORT_MACRO_NAME _OgreOverlayExport
     EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/include/OgreOverlayPrerequisites.h)

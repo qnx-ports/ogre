@@ -394,6 +394,8 @@ if (MSVC OR CMAKE_GENERATOR MATCHES Xcode)
 	option(OGRE_PROJECT_FOLDERS "Organize project into project folders." TRUE)
 endif ()
 
+option(OGRE_MANGLE_NAME_OF_LIBRARIES_USED_BY_RVIZ "If enabled, append a unique name to OgreMain, OgreOverlay and OgreGLSupport." FALSE)
+
 # hide advanced options
 mark_as_advanced(
   OGRE_BUILD_RTSHADERSYSTEM_CORE_SHADERS

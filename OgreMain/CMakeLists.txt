@@ -220,9 +220,14 @@ if (APPLE)
 
   if(OGRE_BUILD_LIBS_AS_FRAMEWORKS)
     # Framework is called 'Ogre'
-    set_target_properties(OgreMain PROPERTIES	OUTPUT_NAME Ogre)
+    set_target_properties(OgreMain PROPERTIES OUTPUT_NAME Ogre)
   endif()
 endif ()
+
+if(OGRE_MANGLE_NAME_OF_LIBRARIES_USED_BY_RVIZ)
+  set_target_properties(OgreMain PROPERTIES OUTPUT_NAME OgreMain_rviz)
+endif()
+
 target_link_libraries(OgreMain PUBLIC ${PLATFORM_LIBS} PRIVATE ${LIBRARIES} ${CMAKE_DL_LIBS})
 
 if(ANDROID)
