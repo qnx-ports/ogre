@@ -29,29 +29,35 @@ def main():
 
     cmake_source_dir = "."
     cmake_args = [
+        "-DCMAKE_BUILD_TYPE=Debug",
         "-DOGRE_LIB_DIRECTORY=Ogre",  # install into Python package
+        "-DOGRE_STATIC=OFF",
+        "-DOGRE_STATIC_LIB=OFF",
         "-DOGRE_BITES_STATIC_PLUGINS=ON",
         "-DOGRE_NODELESS_POSITIONING=OFF",
-        "-DOGRE_BUILD_DEPENDENCIES=ON",
-        "-DOGRE_INSTALL_DEPENDENCIES=ON",
-        "-DOGRE_BUILD_SAMPLES=OFF",
+        "-DOGRE_BUILD_DEPENDENCIES=OFF",
+        "-DOGRE_INSTALL_DEPENDENCIES=OFF",
+        "-DOGRE_BUILD_TESTS=ON",
+        "-DOGRE_BUILD_SAMPLES=ON",
         "-DOGRE_BUILD_TOOLS=OFF",
+        "-DOGRE_BUILD_COMPONENT_OVERLAY_IMGUI=OFF",
+        "-DOGRE_BUILD_COMPONENT_BITES=ON",
         "-DOGRE_BUILD_COMPONENT_CSHARP=OFF",
         "-DOGRE_BUILD_COMPONENT_JAVA=OFF",
         "-DOGRE_BUILD_COMPONENT_PROPERTY=OFF",
-        "-DOGRE_BUILD_RENDERSYSTEM_GL=ON",
-        "-DOGRE_BUILD_RENDERSYSTEM_GL3PLUS=ON",
+        "-DOGRE_BUILD_RENDERSYSTEM_GL=OFF",
+        "-DOGRE_BUILD_RENDERSYSTEM_GL3PLUS=OFF",
         "-DOGRE_BUILD_RENDERSYSTEM_GLES2=ON",
-        "-DOGRE_BUILD_RENDERSYSTEM_TINY=ON",
+        "-DOGRE_BUILD_RENDERSYSTEM_TINY=OFF",
         "-DOGRE_BUILD_PLUGIN_ASSIMP=ON",
-        "-DOGRE_BUILD_PLUGIN_FREEIMAGE=OFF",
+        "-DOGRE_BUILD_PLUGIN_FREEIMAGE=ON",
         "-DOGRE_BUILD_PLUGIN_EXRCODEC=OFF",
         "-DOGRE_BUILD_PLUGIN_CG=OFF",
         "-DOGRE_BUILD_PLUGIN_BSP=OFF",
         "-DOGRE_BUILD_PLUGIN_PCZ=OFF",
         # not yet wrapped components
         "-DOGRE_BUILD_COMPONENT_MESHLODGENERATOR=OFF",
-        "-DOGRE_BUILD_COMPONENT_VOLUME=OFF"
+        "-DOGRE_BUILD_COMPONENT_VOLUME=ON"
     ]
 
     if sys.platform == "win32":
@@ -68,12 +74,18 @@ def main():
                        "-DPYTHON_LIBRARY=dontcare", # workaround issue with cmake & manylinux
                        "-DCMAKE_CXX_FLAGS=-s", # strip assimp
                        "-DCMAKE_INSTALL_RPATH=$ORIGIN;$ORIGIN/OGRE"]
+    elif sys.platform == "QNX":
+        cmake_args += ["-DOGRE_GLSUPPORT_USE_EGL=ON",
+                       "-DOGRE_BUILD_RENDERSYSTEM_VULKAN=OFF",
+                       "-DOGRE_BUILD_PLUGIN_GLSLANG=ON",
+                       "-DPYTHON_LIBRARY=dontcare", # workaround issue with cmake & manylinux
+                       ]
     elif sys.platform == "darwin":
         cmake_args += ["-DOGRE_BUILD_LIBS_AS_FRAMEWORKS=OFF",
                        "-DCMAKE_OSX_ARCHITECTURES=arm64",
                        "-DCMAKE_INSTALL_RPATH=@loader_path;@loader_path/OGRE"]
 
-    version = re.search("project\(OGRE VERSION (\S+)\)", open("CMakeLists.txt").read()).group(1)
+    version = re.search("project\\(OGRE VERSION (\\S+)\\)", open("CMakeLists.txt").read()).group(1)
     # version += ".dev0"
 
     skbuild.setup(
