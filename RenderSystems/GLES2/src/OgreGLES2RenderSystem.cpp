@@ -461,12 +461,14 @@ namespace Ogre {
             glVertexAttribDivisorEXT = glVertexAttribDivisorANGLE;
         }
 
+#ifndef __QNX__
         if (checkExtension("GL_EXT_debug_marker") &&
             checkExtension("GL_EXT_debug_label"))
         {
             OGRE_IF_IOS_VERSION_IS_GREATER_THAN(5.0)
             rsc->setCapability(RSC_DEBUG);
         }
+#endif
 
         if ((hasMinGLVersion(3, 0) && OGRE_PLATFORM != OGRE_PLATFORM_EMSCRIPTEN) ||
             checkExtension("GL_EXT_map_buffer_range"))
