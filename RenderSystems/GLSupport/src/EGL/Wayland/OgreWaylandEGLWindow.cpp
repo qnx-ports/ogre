@@ -199,6 +199,19 @@ void WaylandEGLWindow::create(const String& name, uint width, uint height, bool 
 
     initNativeCreatedWindow(miscParams);
 
+    if (!mEglConfig && eglContext)
+    {
+        mEglConfig = mGLSupport->getGLConfigFromContext(eglContext);
+
+        if (!mEglConfig)
+        {
+            // This should never happen.
+            OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR,
+                        "Unexpected failure to determine a EGLFBConfig",
+                        "EGLWindow::create");
+        }
+    }
+
     if (!mEglConfig)
     {
         int minAttribs[] = {
