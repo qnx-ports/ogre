@@ -79,7 +79,7 @@ def main():
                        "-DOGRE_BUILD_RENDERSYSTEM_VULKAN=OFF",
                        "-DOGRE_BUILD_PLUGIN_GLSLANG=ON",
                        "-DPYTHON_LIBRARY=dontcare", # workaround issue with cmake & manylinux
-                       ]
+                       "-DCMAKE_INSTALL_RPATH=$ORIGIN;$ORIGIN/OGRE"]
     elif sys.platform == "darwin":
         cmake_args += ["-DOGRE_BUILD_LIBS_AS_FRAMEWORKS=OFF",
                        "-DCMAKE_OSX_ARCHITECTURES=arm64",
