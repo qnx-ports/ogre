@@ -883,7 +883,6 @@ namespace OgreBites
                 Ogre::Plugin* p = mRoot->getInstalledPlugins().back();   // acquire plugin instance
                 SamplePlugin* sp = dynamic_cast<SamplePlugin*>(p);
 
-#if 0
                 if (!sp)  // this is not a SamplePlugin, so unload it
                 {
                     Ogre::LogManager::getSingleton().logError(s + " is not a SamplePlugin");
@@ -892,12 +891,6 @@ namespace OgreBites
                     continue;
                 }
 
-#else
-                if (!sp) {
-                    sp = static_cast<SamplePlugin *>(p);
-                }
-
-#endif
                 mLoadedSamplePlugins.push_back(sampleDir + s);   // add to records
 #else
                 SamplePlugin* sp = mPluginNameMap[s];
